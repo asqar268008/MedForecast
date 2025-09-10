@@ -1,0 +1,13 @@
+.name img{
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+}
+.name1{
+    text-align: center;
+}
+.name-link{
+    top: 50px;
+    right: 50px;
+    transform: (-50,-50);
+}

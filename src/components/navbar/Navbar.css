@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 75px;
+    color: white;
+    background-color: green;
+
+}
+ .nav-links{
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    width: 75%;
+    top: 100px;
+ }
+ .home,.History,.signup,.about,.logout,.Settings{
+    text-decoration: none;
+    color:black;
+    font-size:20px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+ }
+ .navbar img{
+    height: 50px;
+    width: 50px;
+    right: 50%;
+    right: 50px;
+    align-items: center;
+    text-align: center;
+}
+
+
+.Forgotpassword,.Condition,.Searchbox{
+    display: none;
+}

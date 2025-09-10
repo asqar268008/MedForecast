@@ -1,0 +1,15 @@
+pdf2image
+pytesseract
+nltk
+pymongo
+psycopg2-binary
+django
+djongo
+bson
+# BytesIO
+django-cors-headers
+djangorestframework
+scikit-learn
+pandas
+numpy
+torch
