@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; 
 import axios from "axios";
 import "./Home.css";
-import { FaUserCircle } from "react-icons/fa"; // User icon
+import { FaUserCircle } from "react-icons/fa"; 
 
 const Home = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
-  const [userName, setUserName] = useState(""); // Optionally store user's name
+  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [userName, setUserName] = useState(""); 
   const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
@@ -27,7 +27,7 @@ const Home = () => {
       if (response.status === 200) {
         alert("Login successful!");
         setIsLoggedIn(true);
-        setUserName(email.split("@")[0]); // simple username display
+        setUserName(email.split("@")[0]); 
         navigate("/Searchbox"); 
       } else {
         alert("Login failed! Please check your credentials.");
@@ -50,10 +50,7 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Welcome to MedForCast</h1>
-
       {isLoggedIn ? (
-        // **After login: show user icon and settings**
         <div className="home-container">
           <div className="header">
             <h3>Hello, {userName}</h3>
@@ -68,38 +65,46 @@ const Home = () => {
           <p>You are logged in! Start your disease prediction now.</p>
         </div>
       ) : (
-        // **Before login: show login form**
-        <div className="home-container">
-          <form onSubmit={handleLogin}>
-            <h3>Login to Your Account</h3>
+        <div className="home-page">
+          {/* Company header fixed at top-left */}
+          <div className="company-header">
+            <img src="logo.png" alt="logo" className="company-logo" />
+            <h3 className="company-name">MedForecast</h3>
+          </div>
 
-            <label>Email</label>
-            <input
-              type="email"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+          {/* Centered login box */}
+          <div className="home-container">
+            <form onSubmit={handleLogin}>
+              <h3>Login to Your Account</h3>
 
-            <label>Password</label>
-            <input
-              type="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+              <label>Email</label>
+              <input
+                type="email"
+                placeholder="Enter Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
 
-            <button type="submit">Login</button>
+              <label>Password</label>
+              <input
+                type="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
 
-            <p>
-              Don't have an account? <a href="/SignUp">Sign Up</a>
-            </p>
-            <p>
-              Forgot password? <a href="/Forgotpassword">Click Here</a>
-            </p>
-          </form>
+              <button type="submit">Login</button>
+
+              <p>
+                Don't have an account? <a href="/SignUp">Sign Up</a>
+              </p>
+              <p>
+                Forgot password? <a href="/Forgotpassword">Click Here</a>
+              </p>
+            </form>
+          </div>
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
+// App.js
 import React from 'react'
 import Navbar from './components/navbar/Navbar'
-import { BrowserRouter as Router,Route,Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './components/Home'
 import About from './components/About'
 import History from './components/History'
@@ -12,10 +13,15 @@ import Forgotpassword from './components/Forgotpassword'
 import Condition from './components/Condition'
 import Searchbox from './components/Searchbox'
 
-const App = () => {
+const AppContent = () => {
+  const location = useLocation();
+
+  // Hide Navbar only on the login page
+  const hideNavbar = location.pathname === "/";
+
   return (
-    <Router>
-      <Navbar/>
+    <>
+      {!hideNavbar && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home/>} />
@@ -29,10 +35,16 @@ const App = () => {
         <Route path="/Condition" element={<Condition/>} />
         <Route path="/Searchbox" element={<Searchbox/>} />
       </Routes>
+    </>
+  );
+};
 
+const App = () => {
+  return (
+    <Router>
+      <AppContent />
     </Router>
+  );
+};
 
-  )
-}
-
-export default App
+export default App;

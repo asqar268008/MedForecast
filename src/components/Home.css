@@ -4,22 +4,44 @@ body {
   background-color: #f4f7f8;
 }
 
+/* Company logo & name in top-left */
+.company-header {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.company-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.company-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0;
+}
+
+/* Center login box */
+.home-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .home-container {
   width: 100%;
   max-width: 450px;
-  margin: 80px auto;
   padding: 40px 30px;
   background-color: #ffffff;
   border-radius: 12px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   text-align: center;
-}
-
-h1 {
-  text-align: center;
-  color: #2c3e50;
-  font-size: 2rem;
-  margin-bottom: 40px;
 }
 
 .home-container h3 {
@@ -82,7 +104,7 @@ h1 {
   text-decoration: underline;
 }
 
-/* Optional: for post-login user section */
+/* Logged-in header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -92,12 +114,19 @@ h1 {
 .user-menu {
   display: flex;
   align-items: center;
+  gap: 10px;
 }
 
-.user-menu img,
-.user-menu svg {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.dropdown button {
   margin-left: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #27ae60;
+  color: white;
+  cursor: pointer;
+}
+
+.dropdown button:hover {
+  background-color: #2ecc71;
 }
