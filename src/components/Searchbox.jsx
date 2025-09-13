@@ -1,33 +1,29 @@
-import React, { useState } from 'react';
-import { RiSearchLine } from 'react-icons/ri';
+import React, { useState, useRef } from 'react';
 import './Searchbox.css';
 
 const Searchbox = ({ userEmail }) => {
   const [file1, setFile1] = useState(null);
   const [selectedFileName, setSelectedFileName] = useState("");
   const [predictedDisease, setPredictedDisease] = useState("");
+  const fileInputRef = useRef(null);
 
-  // Handle file selection
   const handleFileChange1 = (e) => {
     setFile1(e.target.files[0]);
     setSelectedFileName(e.target.files[0].name);
-    setPredictedDisease(""); // Clear previous prediction
+    setPredictedDisease("");
   };
 
-  // Upload PDF & get prediction
   const handleUpload1 = async () => {
     if (!file1) {
       alert("No file selected for File 1");
       return;
     }
-
     try {
       const formData = new FormData();
       formData.append("file", file1);
-      formData.append("email", userEmail); // Use logged-in user email
-      formData.append("name", ""); // Optional: can pass username if needed
+      formData.append("email", userEmail);
+      formData.append("name", "");
 
-      // Upload PDF
       const uploadResponse = await fetch("http://localhost:8000/upload-pdf/", {
         method: "POST",
         body: formData,
@@ -39,7 +35,6 @@ const Searchbox = ({ userEmail }) => {
         return;
       }
 
-      // Get PDF ID and predict disease
       const pdfId = uploadData.pdf_id;
       const predictResponse = await fetch(`http://localhost:8000/predict/${pdfId}/`);
       const predictData = await predictResponse.json();
@@ -55,36 +50,48 @@ const Searchbox = ({ userEmail }) => {
     }
   };
 
+  const handleChooseFileClick = () => {
+    fileInputRef.current.click();
+  };
+
   return (
-    <div className='box'>
-      <h3>How can we help?</h3>
+    <div className='searchbox-container'>
+      <h2 className='title'>How can we help you today?</h2>
+      
+      <div className="file-upload">
+        <h3 className="file-upload-title">Upload a PDF Report</h3>
+        <p className="file-upload-subtitle">
+          Select a PDF file to analyze and predict a disease.
+        </p>
+        
+        <div className="file-input-container">
+          <input 
+            type="file" 
+            ref={fileInputRef}
+            onChange={handleFileChange1}
+            style={{ display: 'none' }} 
+          />
+          <button onClick={handleChooseFileClick} className='choose-file-btn'>
+            Choose File
+          </button>
+          <span className="file-name-display">{selectedFileName || "No file chosen"}</span>
+        </div>
 
-      <div className='search'>
-        <form>
-          <div className='type'>
-            <RiSearchLine />
-            <input type="search" placeholder="Type symptoms to search....." />
-          </div>
-        </form>
-      </div>
-
-      {/* File upload */}
-      <div className="file">
-        <h3>Upload PDF</h3>
-        <input type="file" onChange={handleFileChange1} />
-        <button type="button" className='upload1' onClick={handleUpload1}>
+        <button 
+          className='upload-predict-btn' 
+          onClick={handleUpload1}
+          disabled={!file1} 
+        >
           Upload & Predict
         </button>
-
-        {selectedFileName && <p>Selected File: {selectedFileName}</p>}
-        {predictedDisease && (
-          <p><strong>Predicted Disease:</strong> {predictedDisease}</p>
-        )}
       </div>
 
-      <div>
-        <button className='submit'>Submit</button>
-      </div>
+      {predictedDisease && (
+        <div className='prediction-result'>
+          <p className='prediction-label'>Predicted Disease:</p>
+          <p className='prediction-text'>{predictedDisease}</p>
+        </div>
+      )}
     </div>
   );
 };
