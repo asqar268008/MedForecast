@@ -17,13 +17,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from .views import upload_pdf,signUp,signIn,send_otp,verify_otp
+from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('upload-pdf/', upload_pdf, name='upload_pdf'),
-    path('api/sign-up/', signUp, name='sign-up'),
-    path('api/sign-in/', signIn, name='sign-in'),
-    path("api/send-otp/", send_otp, name="send-otp"),
-    path("api/reset-password/", verify_otp, name="reset-password"),
+    path('upload-pdf/', views.upload_pdf, name='upload_pdf'),
+    path('api/sign-up/', views.signUp, name='sign-up'),
+    path('api/sign-in/', views.signIn, name='sign-in'),
+    path("api/send-otp/", views.send_otp, name="send-otp"),
+    path("api/reset-password/", views.verify_otp, name="reset-password"),
+    path('predict/<str:pdf_id>/', views.predict_pdf_disease, name='predict_pdf_disease'),
 ]
