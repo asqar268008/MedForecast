@@ -5,7 +5,6 @@ pymongo
 psycopg2-binary
 django
 djongo
-bson
 # BytesIO
 django-cors-headers
 djangorestframework

@@ -1,6 +1,6 @@
 // App.js
 import React from 'react'
-import Navbar from './components/navbar/Navbar'
+//import Navbar from './components/navbar/Navbar'
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom'
 import Home from './components/Home'
 import About from './components/About'
@@ -21,8 +21,7 @@ const AppContent = () => {
 
   return (
     <>
-      {!hideNavbar && <Navbar />}
-
+      {!hideNavbar}
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/about" element={<About/>} />
