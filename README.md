@@ -16,7 +16,7 @@ The platform provides:
 - **Frontend:** React.js
 - **Backend:** Django
 - **Database:** Postgresql, MongoDB
-- 
+  
 ## Getting Started
 1. **Clone the Repository:**
 
@@ -26,9 +26,10 @@ cd MedForecast
 ```
 
 2. **Install Dependencies:**
-
- run `pip insatll -r requirements`.
-run `npm install`.
+Run the following command to install all required Python packages:
+```bash
+pip install -r requirements.txt
+npm install
 
 3. **Setup MongoDB:**
 
@@ -50,6 +51,6 @@ run `npm install`.
 
 ---
 
-Thank you for using **MedForecast for to predict the future disease and take a required action to resolved**! Happy buying and selling! 🌱🛍️
-
+🙌 Acknowledgments
+Thanks for using MedForecast to predict future diseases and take proactive actions for better health outcomes! 🌱💊
 
