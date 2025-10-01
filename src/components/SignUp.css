@@ -1,11 +1,128 @@
-.signup-container{
-  width: 100%;
-  max-width: 400px;
-  margin: 50px auto;
+.signup-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e3f2fd, #f6f9fc);
+  font-family: "Poppins", sans-serif;
   padding: 20px;
-  background: hwb(270 94% 4%);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  text-align: center;
+}
 
+.signup-card {
+  width: 100%;
+  max-width: 450px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.signup-header {
+  margin-bottom: 1.2rem;
+}
+.signup-header .brand {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.signup-header .tagline {
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+  color: #666;
+}
+
+.signup-card h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  color: #333;
+  font-weight: 600;
+}
+
+form {
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  align-items: center;
+  background: #f1f4f9;
+  margin-bottom: 0.9rem;
+  border-radius: 6px;
+  padding: 0.55rem 0.7rem;
+}
+.form-group .icon {
+  margin-right: 8px;
+  color: #4facfe;
+  font-size: 1.1rem;
+}
+.form-group input,
+.form-group select {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.95rem;
+  padding: 5px 0;
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+}
+.form-row .form-group {
+  flex: 1;
+}
+
+/* Gender dropdown spacing */
+.gender-group select {
+  flex: 1;
+  margin-left: 8px;
+}
+
+/* Terms checkbox alignment */
+.signup-card .terms {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.terms-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.terms-label input[type="checkbox"] {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+}
+
+.terms-label a {
+  color: #4facfe;
+  text-decoration: none;
+}
+
+.terms-label a:hover {
+  text-decoration: underline;
+}
+
+.signup-btn {
+  width: 100%;
+  background: #4facfe;
+  border: none;
+  padding: 0.85rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.signup-btn:hover {
+  background: #3c7edc;
 }

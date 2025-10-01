@@ -1,177 +1,185 @@
-import React, { useState } from 'react';
-import './SignUp.css';
-import { AiOutlineUser } from 'react-icons/ai';
-import { MdEmail } from 'react-icons/md';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import {
+  FaUser,
+  FaLock,
+  FaEnvelope,
+  FaBirthdayCake,
+  FaVenusMars,
+} from "react-icons/fa";
+import "./SignUp.css";
 
-const Signup = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
-    firstname: '',
-    lastname: '',
-    password: '',
-    confirmpassword: '',
-    age: '',
-    email: '',
-    dob: '',
-    gender: '',
+    firstName: "",
+    lastName: "",
+    password: "",
+    confirmPassword: "",
+    email: "",
+    dob: "",
+    age: "",
+    gender: "",
     terms: false,
   });
 
+  // Calculate age automatically based on DOB
+  useEffect(() => {
+    if (formData.dob) {
+      const today = new Date();
+      const birthDate = new Date(formData.dob);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      setFormData((prev) => ({ ...prev, age }));
+    } else {
+      setFormData((prev) => ({ ...prev, age: "" }));
+    }
+  }, [formData.dob]);
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'checkbox' ? checked : value,
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!formData.terms) {
-      alert('Please accept the terms and conditions.');
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
       return;
     }
-
-    if (formData.password !== formData.confirmpassword) {
-      alert('Passwords do not match.');
-      return;
-    }
-
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/sign-up/', formData);
-      if (response.status === 201 || response.status === 200) {
-        alert('Signed up successfully');
-      }
-    } catch (error) {
-      console.error('Error signing up:', error);
-      alert('Sign-up failed. Please try again.');
-    }
+    console.log("Form Data:", formData);
+    // TODO: send data to backend
   };
 
   return (
-    <div className='signup-container'>
-      <form onSubmit={handleSubmit}>
-        <div className='form-group'>
-          <label>First Name:</label>
-          <div className='input-icon'>
-            <AiOutlineUser />
-            <input 
-              type='text' 
-              name='firstname' 
-              placeholder='Enter First Name' 
-              value={formData.firstName} 
-              onChange={handleChange} 
-              required 
+    <div className="signup-wrapper">
+      <div className="signup-card">
+        <div className="signup-header">
+          <h1 className="brand">🩺 MedForecast</h1>
+          <p className="tagline">AI-powered health predictions for better decisions.</p>
+        </div>
+
+        <h2>Create Account</h2>
+
+        <form onSubmit={handleSubmit}>
+          {/* Name fields */}
+          <div className="form-row">
+            <div className="form-group">
+              <FaUser className="icon" />
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <FaUser className="icon" />
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div className="form-group">
+            <FaLock className="icon" />
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
             />
           </div>
-        </div>
 
-        <div className='form-group'>
-          <label>Last Name:</label>
-          <div className='input-icon'>
-            <AiOutlineUser />
-            <input 
-              type='text' 
-              name='lastname' 
-              placeholder='Enter Last Name' 
-              value={formData.lastName} 
-              onChange={handleChange} 
-              required 
+          <div className="form-group">
+            <FaLock className="icon" />
+            <input
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
             />
           </div>
-        </div>
 
-        <div className='form-group'>
-          <label>Password:</label>
-          <input 
-            type='password' 
-            name='password' 
-            placeholder='Enter Password' 
-            value={formData.password} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-
-        <div className='form-group'>
-          <label>Confirm Password:</label>
-          <input 
-            type='password' 
-            name='confirmpassword' 
-            placeholder='Re-enter Password' 
-            value={formData.confirmpassword} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
-
-        <div className='form-group'>
-          <label>Email Address:</label>
-          <div className='input-icon'>
-            <MdEmail />
-            <input 
-              type='email' 
-              name='email' 
-              placeholder='Enter Email' 
-              value={formData.email} 
-              onChange={handleChange} 
-              required 
+          {/* Email */}
+          <div className="form-group">
+            <FaEnvelope className="icon" />
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter Email"
+              value={formData.email}
+              onChange={handleChange}
+              required
             />
           </div>
-        </div>
 
-        <div className='form-group'>
-          <label>Date of Birth:</label>
-          <input 
-            type='date' 
-            name='dob' 
-            value={formData.dob} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
+          {/* DOB, Age, Gender in one row */}
+          <div className="form-row">
+            <div className="form-group">
+              <FaBirthdayCake className="icon" />
+              <input
+                type="date"
+                name="dob"
+                value={formData.dob}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <input type="number" name="age" placeholder="Age" value={formData.age} readOnly />
+            </div>
+            <div className="form-group gender-group">
+              <FaVenusMars className="icon" />
+              <select name="gender" value={formData.gender} onChange={handleChange} required>
+                <option value="">Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
 
-        <div className='form-group'>
-          <label>Age:</label>
-          <input 
-            type='number' 
-            name='age' 
-            placeholder='Enter Age' 
-            value={formData.age} 
-            onChange={handleChange} 
-            required 
-          />
-        </div>
+          {/* Terms */}
+          <div className="terms">
+            <label className="terms-label">
+              <input
+                type="checkbox"
+                name="terms"
+                checked={formData.terms}
+                onChange={handleChange}
+                required
+              />
+              <span>
+                Agree with <a href="#">privacy policy</a>
+              </span>
+            </label>
+          </div>
 
-        <div className='form-group'>
-          <label>Gender:</label>
-          <select 
-            name='gender' 
-            value={formData.gender} 
-            onChange={handleChange} 
-            required
-          >
-            <option value='' disabled>Select Gender</option>
-            <option value='male'>Male</option>
-            <option value='female'>Female</option>
-          </select>
-        </div>
-
-        <div className='form-group'>
-          <input 
-            type='checkbox' 
-            name='terms' 
-            checked={formData.terms} 
-            onChange={handleChange} 
-          />
-          I agree to the <a href='/Condition'>Terms and Conditions</a>
-        </div>
-
-        <button type='submit'>Submit</button>
-      </form>
+          {/* Submit */}
+          <button type="submit" className="signup-btn">
+            Create Account
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
 
-export default Signup;
+export default SignUp;

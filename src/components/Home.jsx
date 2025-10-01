@@ -66,18 +66,9 @@ const Home = () => {
         </div>
       ) : (
         <div className="home-page">
-          {/* Company header fixed at top-left */}
-          <div className="company-header">
-            <img src="logo.png" alt="logo" className="company-logo" />
-            <h3 className="company-name">MedForecast</h3>
-          </div>
-
-          {/* Centered login box */}
           <div className="home-container">
             <form onSubmit={handleLogin}>
               <h3>Login to Your Account</h3>
-
-              <label>Email</label>
               <input
                 type="email"
                 placeholder="Enter Email"
@@ -85,8 +76,6 @@ const Home = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-
-              <label>Password</label>
               <input
                 type="password"
                 placeholder="Enter Password"

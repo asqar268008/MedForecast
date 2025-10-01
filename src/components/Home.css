@@ -4,7 +4,10 @@ body {
   background-color: #f4f7f8;
 }
 
-/* Company logo & name in top-left */
+body, .home-page {
+  padding-top: 80px; /* So content doesn't hide under header */
+}
+
 .company-header {
   position: absolute;
   top: 20px;
