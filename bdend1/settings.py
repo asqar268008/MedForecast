@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "corsheaders",
+    "rest_framework",
     "bdend1",
 ]
 
@@ -73,7 +74,15 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "bdend1.wsgi.application"
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # React default port
+    "http://127.0.0.1:3000",
+]
 
+CORS_ALLOW_ALL_ORIGINS = True  # For development only
+
+# Allow credentials
+CORS_ALLOW_CREDENTIALS = True
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases

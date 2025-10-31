@@ -1,5 +1,46 @@
-*{
-    text-align: center;
-    top: 300px;
-    right: 300px;
+.logout-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e3f2fd, #f6f9fc);
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+}
+
+.logout-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.logout-card h2 {
+  color: #27ae60;
+  margin-bottom: 1rem;
+}
+
+.logout-card p {
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background: #4facfe;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.login-btn:hover {
+  background: #3c7edc;
 }

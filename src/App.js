@@ -2,10 +2,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import Home from './components/Home';
-import About from './components/About';
-import History from './components/History';
 import SignUp from './components/SignUp';
-import Contact from './components/Contact';
 import LogOut from './components/LogOut';
 import Settings from './components/Settings';
 import Forgotpassword from './components/Forgotpassword';
@@ -24,9 +21,6 @@ const AppContent = () => {
       {!hideHeader && <Header />} {/* Show header except on login */}
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/contact" element={<Contact />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/logout" element={<LogOut />} />
         <Route path="/settings" element={<Settings />} />

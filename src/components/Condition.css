@@ -1,17 +1,68 @@
-.condition{
-    width: 100%;
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background: hwb(270 94% 4%);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    text-align: center;
-    background-color: rgb(248, 241, 241);  
+.condition-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e3f2fd, #f6f9fc);
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
 }
-.accept-button{
-    background-color: green;
+
+.condition-card {
+  width: 100%;
+  max-width: 600px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 14px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
 }
-.declien-button{
-    background-color: brown;
+
+.condition-card h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.terms-content {
+  margin-bottom: 2rem;
+}
+
+.terms-content p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.accept-button, .decline-button {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.accept-button {
+  background: #27ae60;
+  color: white;
+}
+
+.accept-button:hover {
+  background: #219653;
+}
+
+.decline-button {
+  background: #e74c3c;
+  color: white;
+}
+
+.decline-button:hover {
+  background: #c0392b;
 }

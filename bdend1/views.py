@@ -6,7 +6,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 from django.core.mail import send_mail
 from django.core.cache import cache
-
+from django.views.decorators.http import require_http_methods
 from pymongo import MongoClient
 import gridfs
 from bson import ObjectId
@@ -157,23 +157,43 @@ def send_otp(request):
     try:
         data = json.loads(request.body)
         email = data.get("email")
+        
+        print(f"Received OTP request for email: {email}")  # Debug print
+        
         if not email:
             return JsonResponse({"error": "Email is required"}, status=400)
+
+        # Check if user exists
+        if not User.objects.filter(email=email).exists():
+            return JsonResponse({"error": "No account found with this email"}, status=404)
 
         otp = random.randint(100000, 999999)
         cache.set(f"otp_{email}", otp, OTP_EXPIRY_TIME)
 
+        print(f"Generated OTP for {email}: {otp}")  # Debug print
+
+        # For development, you can return the OTP instead of sending email
+        # Remove this in production
+        return JsonResponse({
+            "message": "OTP sent successfully", 
+            "otp": otp  # Remove this line in production
+        })
+
+        # Uncomment this for actual email sending in production:
+        """
         send_mail(
-            "Your OTP",
-            f"Your OTP is {otp}",
-            "your-email@gmail.com",
+            "Your OTP for Password Reset",
+            f"Your OTP is {otp}. It will expire in 5 minutes.",
+            "noreply@medforecast.com",  # Update with your email
             [email],
             fail_silently=False
         )
-
         return JsonResponse({"message": "OTP sent successfully"})
+        """
+        
     except Exception as e:
-        return JsonResponse({"error": str(e)}, status=500)
+        print(f"OTP sending error: {str(e)}")  # Debug print
+        return JsonResponse({"error": f"Failed to send OTP: {str(e)}"}, status=500)
 
 
 @csrf_exempt

@@ -6,22 +6,26 @@ import {
   FaBirthdayCake,
   FaVenusMars,
 } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./SignUp.css";
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    firstname: "",  
+    lastname: "",   
     password: "",
-    confirmPassword: "",
+    confirmpassword: "", 
     email: "",
-    dob: "",
+    dob: "",        
     age: "",
     gender: "",
     terms: false,
   });
 
-  // Calculate age automatically based on DOB
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (formData.dob) {
       const today = new Date();
@@ -31,7 +35,7 @@ const SignUp = () => {
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
         age--;
       }
-      setFormData((prev) => ({ ...prev, age }));
+      setFormData((prev) => ({ ...prev, age: age.toString() }));
     } else {
       setFormData((prev) => ({ ...prev, age: "" }));
     }
@@ -45,14 +49,93 @@ const SignUp = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+    
+    if (formData.password !== formData.confirmpassword) {
+      setMessage("Passwords do not match!");
       return;
     }
-    console.log("Form Data:", formData);
-    // TODO: send data to backend
+
+    if (!formData.terms) {
+      setMessage("Please agree to the privacy policy!");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setMessage("");
+
+    try {
+      const { terms, ...userData } = formData;
+
+      console.log("Sending data to backend:", userData);
+
+      const response = await fetch("http://localhost:8000/api/sign-up/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const contentType = response.headers.get("content-type");
+      let data;
+
+      if (contentType && contentType.includes("application/json")) {
+        data = await response.json();
+      } else {
+        const text = await response.text();
+        console.error("Server returned HTML instead of JSON:", text.substring(0, 200));
+        throw new Error(`Server returned HTML. Check API endpoint. Status: ${response.status}`);
+      }
+
+      if (response.ok) {
+        setMessage("Account created successfully! Redirecting to login...");
+        
+        setFormData({
+          firstname: "",
+          lastname: "",
+          password: "",
+          confirmpassword: "",
+          email: "",
+          dob: "",
+          age: "",
+          gender: "",
+          terms: false,
+        });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+
+      } else {
+        if (data.error) {
+          setMessage(data.error);
+        } else if (data.errors) {
+          const errorMessages = Object.values(data.errors).flat().join(', ');
+          setMessage(errorMessages);
+        } else {
+          setMessage(data.message || "Error creating account");
+        }
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      
+      if (error.message.includes("HTML")) {
+        setMessage("API endpoint not found. Please check if the server is running correctly.");
+      } else if (error.message.includes("Failed to fetch")) {
+        setMessage("Cannot connect to server. Please make sure Django is running on http://localhost:8000");
+      } else {
+        setMessage(`Error: ${error.message}`);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleTermsClick = (e) => {
+    e.preventDefault();
+    navigate("/condition");
   };
 
   return (
@@ -65,6 +148,12 @@ const SignUp = () => {
 
         <h2>Create Account</h2>
 
+        {message && (
+          <div className={`message ${message.includes("successfully") ? "success" : "error"}`}>
+            {message}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit}>
           {/* Name fields */}
           <div className="form-row">
@@ -72,9 +161,9 @@ const SignUp = () => {
               <FaUser className="icon" />
               <input
                 type="text"
-                name="firstName"
+                name="firstname"
                 placeholder="First Name"
-                value={formData.firstName}
+                value={formData.firstname}
                 onChange={handleChange}
                 required
               />
@@ -83,9 +172,9 @@ const SignUp = () => {
               <FaUser className="icon" />
               <input
                 type="text"
-                name="lastName"
+                name="lastname"
                 placeholder="Last Name"
-                value={formData.lastName}
+                value={formData.lastname}
                 onChange={handleChange}
                 required
               />
@@ -109,9 +198,9 @@ const SignUp = () => {
             <FaLock className="icon" />
             <input
               type="password"
-              name="confirmPassword"
+              name="confirmpassword"
               placeholder="Confirm Password"
-              value={formData.confirmPassword}
+              value={formData.confirmpassword}
               onChange={handleChange}
               required
             />
@@ -167,16 +256,27 @@ const SignUp = () => {
                 required
               />
               <span>
-                Agree with <a href="#">privacy policy</a>
+                Agree with <a href="/condition" onClick={handleTermsClick}>terms and conditions</a>
               </span>
             </label>
           </div>
 
           {/* Submit */}
-          <button type="submit" className="signup-btn">
-            Create Account
+          <button 
+            type="submit" 
+            className="signup-btn"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Creating Account..." : "Create Account"}
           </button>
         </form>
+
+        {/* Login redirect link */}
+        <div className="login-redirect">
+          <p>
+            Already have an account? <span onClick={() => navigate("/")} className="login-link">Login here</span>
+          </p>
+        </div>
       </div>
     </div>
   );
