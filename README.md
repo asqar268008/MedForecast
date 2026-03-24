@@ -75,9 +75,9 @@ npm start
 
 📸 Application Preview
 <div align="center"> 
-  <img src="img/login page.png" width="50%" />
-  <img src="img/signup page.png" width="50%" />
-  <img src="img/login successful.png" width="100%" />
+  <img src="img/login page.png" width="45%" />
+  <img src="img/signup page.png" width="45%" />
+  <img src="img/login successful page.png" width="100%" />
   <img src="img/home page.png" width="100%" />
   <img src="img/prediction page.png" width="100%" />
   <img src="img/server image.png" width="100%" />
