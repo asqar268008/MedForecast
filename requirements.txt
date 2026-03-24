@@ -5,10 +5,10 @@ pymongo
 psycopg2-binary
 django
 djongo
-# BytesIO
 django-cors-headers
 djangorestframework
 scikit-learn
 pandas
 numpy
 torch
+python-dotenv
