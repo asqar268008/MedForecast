@@ -44,7 +44,7 @@ The platform enables users to securely upload medical reports, automatically ext
 ## ⚙️ Setup & Execution
 Clone Repository
 ```
-git clone https://github.com/your-username/MedForecast.git
+git clone https://github.com/asqar268008/MedForecast.git
 ```
 ```
 cd MedForecast
